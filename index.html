@@ -5,20 +5,23 @@
 </head>
 <body>
 <h1>Expression</h1>
-<button onclick="newExpression()">New</button>
-<button onclick="add()">Plus</button>
-<button onclick="multiply()">Multiply</button>
-<p id="a"></p>
-<p id="b"></p>
-<p>-----</p>
-<p id="c"></p>
+<div class="expression">
+    <p id="a"></p>
+    <p id="b"></p>
+    <p>-----</p>
+    <p id="c">X</p>
+</div>
+<div class="button-block">
+    <button onclick="newExpression()">New</button>
+    <button onclick="add()">Plus</button>
+    <button onclick="multiply()">Multiply</button>
+</div>
 <script>
 
     var a;
     var b;
 
     function newExpression() {
-        document.getElementById("c").textContent = "";
         a = randNum();
         b = randNum();
         document.getElementById("a").textContent = a;
