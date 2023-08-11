@@ -1,50 +1,65 @@
 <html>
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <meta name="viewport" content="width=device-width">
-</head>
-<body>
-<h1>Expression</h1>
-<div class="expression">
-    <p id="a"></p>
-    <p id="b"></p>
-    <p>-----</p>
-    <p id="c"></p>
-</div>
-<div class="button-block">
-    <button onclick="newExpression()">New</button>
-    <button onclick="add()">Plus</button>
-    <button onclick="multiply()">Multiply</button>
-</div>
-<script>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <h1>Expression</h1>
+    <div class="expression">
+      <p id="a"></p>
+      <p id="b"></p>
+      <p>-----</p>
+      <p id="c"></p>
+    </div>
+    <div class="button-block">
+      <div class="operation-div">
+        <label for="add-radio">Add</label>
+        <input type="radio" id="add-radio" name="operation-radio" checked />
+        <label for="multiply-radio">Multiply</label>
+        <input type="radio" id="multiply-radio" name="operation-radio" />
+      </div>
+      <button id="next-btn" onclick="newExpression()">Show answer</button>
+    </div>
+    <script>
+      var a = "";
+      var b = "";
+      var next = true;
 
-    var a;
-    var b;
+      function newExpression() {
+        if (next) {
+          a = randNum();
+          b = randNum();
+          document.getElementById("a").textContent = a;
+          document.getElementById("b").textContent = b;
+          document.getElementById("c").textContent = "X";
+          document.getElementById("next-btn").textContent = "Answer";
+          next = false;
+        } else {
+          if (document.getElementById("add-radio").checked) {
+            add();
+          } else {
+            multiply();
+          }
+          document.getElementById("next-btn").textContent = "Next";
+          next = true;
+        }
+      }
 
-    function newExpression() {
-        a = randNum();
-        b = randNum();
-        document.getElementById("a").textContent = a;
-        document.getElementById("b").textContent = b;
-        document.getElementById("c").textContent = 'X';
-    }
+      function add() {
+        document.getElementById("c").textContent = a + b;
+      }
 
-    function add() {
-      document.getElementById("c").textContent = a + b;
-    }
+      function multiply() {
+        document.getElementById("c").textContent = a * b;
+      }
 
-    function multiply() {
-      document.getElementById("c").textContent = a * b;
-    }
+      function randNum() {
+        return Math.floor(Math.random() * 90 + 10);
+      }
 
-    function randNum() {
-      return Math.floor(Math.random() * 90 + 10);
-    }
-
-    window.onload = function() {
-      newExpression();
-    };
-
-</script>
-</body>
+      window.onload = function () {
+        newExpression();
+      };
+    </script>
+  </body>
 </html>
