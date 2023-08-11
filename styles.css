@@ -3,22 +3,3 @@ body {
   margin: 2em 1em;
   text-align: center;
 }
-
-h1 {
-  text-align: center;
-}
-
-button {
-  font-size: 1.2em;
-  margin: 0.2em;
-  padding: 0.4em 1em;
-}
-
-.button-block {
-  margin-top: 10em;
-}
-
-.expression {
-    font-size: 2em;
-    margin-top: 2em;
-}

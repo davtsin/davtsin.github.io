@@ -1,50 +1,109 @@
 <html>
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <meta name="viewport" content="width=device-width">
-</head>
-<body>
-<h1>Expression</h1>
-<div class="expression">
-    <p id="a"></p>
-    <p id="b"></p>
-    <p>-----</p>
-    <p id="c"></p>
-</div>
-<div class="button-block">
-    <button onclick="newExpression()">New</button>
-    <button onclick="add()">Plus</button>
-    <button onclick="multiply()">Multiply</button>
-</div>
-<script>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <h1>Brain gym</h1>
+    <div id="settings">
+      <input type="radio" id="add-radio" name="operation" checked />
+      <label for="add-radio">Add</label>
+      <input type="radio" id="multiply-radio" name="operation" />
+      <label for="multiply-radio">Multiply</label>
 
-    var a;
-    var b;
+      <label for="task-count-select">Count</label>
+      <select id="task-count-select">
+        <option value="1">1</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+      </select>
+      <button onclick="start()">Start</button>
+    </div>
 
-    function newExpression() {
-        a = randNum();
-        b = randNum();
-        document.getElementById("a").textContent = a;
-        document.getElementById("b").textContent = b;
-        document.getElementById("c").textContent = 'X';
-    }
+    <div id="exercise">
+      <div class="expression">
+        <p id="a">a</p>
+        <p id="b">b</p>
+      </div>
+    </div>
 
-    function add() {
-      document.getElementById("c").textContent = a + b;
-    }
+    <div id="answer">
+      <input id="answer-input" type="number" />
+      <button onclick="ok()">Ok</button>
+    </div>
+    <div id="result">
+      <p>result</p>
+    </div>
 
-    function multiply() {
-      document.getElementById("c").textContent = a * b;
-    }
+    <script>
+      var a;
+      var b;
+      var operation;
+      var taskCount;
+      var wrongAnswers = [];
 
-    function randNum() {
-      return Math.floor(Math.random() * 90 + 10);
-    }
+      function start() {
+        reset();
+        displayExpression();
+        if (document.getElementById("add-radio").checked) {
+          operation = "add";
+        }
+        taskCount = document.getElementById("task-count-select").value;
+        console.log(taskCount);
+      }
 
-    window.onload = function() {
-      newExpression();
-    };
+      function displayExpression() {
+        document.getElementById("a").textContent = getRandomNumber();
+        document.getElementById("b").textContent = getRandomNumber();
+      }
 
-</script>
-</body>
+      function ok() {
+        var expected = 0;
+        var actual = 0;
+        var expression = "";
+        var operator = "";
+        var answerInput = document.getElementById("answer-input");
+
+        a = parseInt(document.getElementById("a").textContent);
+        b = parseInt(document.getElementById("b").textContent);
+        if (operation == "add") {
+          expected = a + b;
+          operator = "+";
+        } else {
+          expected = a * b;
+          operator = "*";
+        }
+        console.log(expected);
+
+        actual = parseInt(answerInput.value);
+        console.log(actual);
+
+        if (actual != expected) {
+          wrongAnswers.push(
+            a + operator + b + "=" + actual + "; expected=" + expected
+          );
+        }
+
+        console.log(wrongAnswers);
+        taskCount--;
+        answerInput.value = "";
+
+        if (taskCount == 0) {
+          document.getElementById("result").textContent = wrongAnswers;
+          wrongAnswers = [];
+        }
+      }
+
+      function reset() {
+        document.getElementById("result").textContent = "result";
+        document.getElementById("a").textContent = 0;
+        document.getElementById("b").textContent = 0;
+
+      }
+
+      function getRandomNumber() {
+        return Math.floor(Math.random() * 90 + 10);
+      }
+    </script>
+  </body>
 </html>
